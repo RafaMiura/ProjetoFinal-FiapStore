@@ -1,0 +1,95 @@
+drop sequence SQ_ID_PRODUTO;
+drop sequence SQ_ID_CATEGORIA;
+drop sequence sq_id_usuario;
+DROP SEQUENCE SQ_ID_MARCA;
+drop table tb_produto cascade constraints;
+drop table tb_categoria;
+drop table tb_usuario;
+DROP TABLE TB_MARCA;
+drop trigger tr_ins_usuario;
+drop trigger TR_INS_CATEGORIA;
+drop trigger TR_INS_produto;
+DROP TRIGGER TR_INS_MARCA;
+
+create table TB_USUARIO(
+id number not null primary key,
+email varchar2(45) not null, 
+senha varchar2(45) not null);
+
+create table tb_categoria(
+id_categoria number not null primary key,
+nome_categoria varchar2(45));
+
+CREATE TABLE TB_MARCA (
+    ID_MARCA NUMBER NOT NULL PRIMARY KEY,
+    NOME_MARCA VARCHAR2(100),
+    PAIS_ORIGEM VARCHAR2(100),
+    DESCRICAO VARCHAR2(255)
+);
+
+create table tb_produto (
+id_produto number not null primary key,
+nome_produto varchar2(100),
+valor number,
+dt_fabricacao date,
+quantidade number,
+id_categoria number, 
+id_marca number,
+foreign key (id_categoria) references tb_categoria(id_categoria),
+foreign key (id_marca) references tb_marca(id_marca));
+
+
+create sequence SQ_ID_PRODUTO start with 1 INCREMENT by 1;
+create sequence SQ_ID_CATEGORIA start with 1 INCREMENT by 1;
+create sequence SQ_ID_USUARIO start with 1 INCREMENT by 1;
+CREATE SEQUENCE SQ_ID_MARCA START WITH 1 INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER TR_INS_PRODUTO
+BEFORE INSERT ON tb_produto FOR EACH ROW       
+BEGIN
+  SELECT SQ_ID_PRODUTO.nextval
+  INTO :NEW.id_produto
+  FROM DUAL;
+END;
+/
+
+CREATE OR REPLACE TRIGGER TR_INS_CATEGORIA
+BEFORE INSERT ON tb_categoria FOR EACH ROW       
+BEGIN
+  SELECT SQ_ID_CATEGORIA.nextval
+  INTO :NEW.id_categoria
+  FROM DUAL;
+END;
+/
+
+CREATE OR REPLACE TRIGGER TR_INS_USUARIO
+BEFORE INSERT ON TB_USUARIO FOR EACH ROW       
+BEGIN
+  SELECT SQ_ID_USUARIO.nextval
+  INTO :NEW.ID
+  FROM DUAL;
+END;
+/
+
+CREATE OR REPLACE TRIGGER TR_INS_MARCA
+BEFORE INSERT ON TB_MARCA FOR EACH ROW       
+BEGIN
+  SELECT SQ_ID_MARCA.NEXTVAL
+  INTO :NEW.ID_MARCA
+  FROM DUAL;
+END;
+/
+
+insert into tb_usuario(email, senha) values ('emerson@gmail.com', 'e10adc3949ba59abbe56e057f20f883e');
+
+insert into tb_categoria (nome_categoria) values ('Eletrônicos');
+insert into tb_categoria (nome_categoria) values ('Alimentos');
+insert into tb_categoria (nome_categoria) values ('Brinquedos');
+insert into tb_categoria (nome_categoria) values ('Vestuário');
+
+INSERT INTO TB_MARCA (NOME_MARCA, PAIS_ORIGEM, DESCRICAO) VALUES ('Nike', 'Estados Unidos', 'Marca de vestuário e esportes');
+INSERT INTO TB_MARCA (NOME_MARCA, PAIS_ORIGEM, DESCRICAO) VALUES ('Adidas', 'Alemanha', 'Marca de vestuário e esportes');
+INSERT INTO TB_MARCA (NOME_MARCA, PAIS_ORIGEM, DESCRICAO) VALUES ('Puma', 'Alemanha', 'Marca de vestuário e esportes');
+insert into tb_marca (nome_marca, pais_ORIGEM, descricao) values ('Lacoste', 'Francês', 'Marca consolidada');
+
+COMMIT;

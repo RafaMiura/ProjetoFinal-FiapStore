@@ -1,0 +1,79 @@
+C:\Program Files\Java\jdk-17\bin\javadoc.exe
+
+@param: Explica o propósito de um parâmetro em um método.
+@return: Descreve o valor retornado por um método.
+@throws ou @exception: Indica as exceções que o método pode lançar, ajudando a saber quais exceções precisam ser tratadas.
+@see: Faz referência a classes, métodos ou campos relacionados, funcionando como um link para partes complementares do código.
+@deprecated: Marca elementos obsoletos, indicando que não devem mais ser usados e apontando para alternativas.
+@since: Informa a versão em que o elemento foi introduzido, útil para controle de versão.
+@version: Identifica a versão do código ou elemento, normalmente usada em cabeçalhos de classe.
+@author: Declara o autor do código, indicando a pessoa responsável pela criação.
+@link: Cria um link embutido dentro de uma descrição, apontando para outro método, classe ou campo. É útil para fazer referências diretas sem desviar a leitura para uma seção separada.
+@code: Formata o texto como código, ideal para destacar trechos específicos ou valores de variáveis diretamente na descrição.
+@implSpec: Fornece especificações para implementação de um método, destacando detalhes que devem ser seguidos por implementações. É especialmente útil em interfaces ou métodos abstratos.
+@implNote: Adiciona notas específicas da implementação, ajudando a explicar detalhes de implementação que não são requisitos, mas podem ser importantes para quem mantiver o código.
+@apiNote: Adiciona informações relevantes para o uso da API, orientando desenvolvedores sobre o comportamento esperado ao utilizar o método ou classe.
+
+
+  /**
+ * Classe utilitária para operações com arrays.
+ * 
+ * @author Emerson Abraham
+ * @version 1.0
+ * @since 1.2
+ */
+public class ArrayUtils {
+
+    /**
+     * Copia elementos do array de origem para o array de destino.
+     * Veja {@link java.util.Arrays#copyOfRange(Object[], int, int)} para funcionalidade similar.
+     * 
+     * @param source o array de origem do qual os elementos são copiados
+     * @param target o array de destino para o qual os elementos são copiados
+     * @param length o número de elementos a serem copiados
+     * @throws IllegalArgumentException se o length for maior que o tamanho do array de origem
+     * @return true se os elementos forem copiados com sucesso
+     * @apiNote Para melhor performance, garanta que os arrays de origem e destino tenham tamanho semelhante.
+     */
+    public boolean copyElements(Object[] source, Object[] target, int length) {
+        if (length > source.length) {
+            throw new IllegalArgumentException("O comprimento excede o tamanho do array de origem.");
+        }
+        System.arraycopy(source, 0, target, 0, length);
+        return true;
+    }
+
+    /**
+     * Ordena o array fornecido em ordem crescente.
+     * 
+     * @implSpec Esta implementação garante que todos os elementos sejam ordenados usando um algoritmo de ordenação estável.
+     * @implNote Este método usa um algoritmo de ordenação otimizado para melhorar a performance.
+     * 
+     * @param array o array a ser ordenado
+     */
+    public void sortArray(int[] array) {
+        // Lógica de ordenação aqui
+    }
+
+    /**
+     * Define o modo para esta utilidade de array.
+     * Exemplo de uso: {@code setMode(READ_ONLY);}
+     * 
+     * @param mode o modo a ser definido, como READ_ONLY ou WRITE
+     */
+    public void setMode(String mode) {
+        // Lógica para definir o modo aqui
+    }
+
+    /**
+     * Este método está obsoleto e não deve ser usado.
+     * 
+     * @deprecated Este método está obsoleto e será removido em versões futuras.
+     * Use {@link #copyElements(Object[], Object[], int)} em vez disso.
+     */
+    @Deprecated
+    public void oldCopyMethod() {
+        // Lógica antiga de cópia aqui
+    }
+
+}
